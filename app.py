@@ -50,6 +50,41 @@ def login(usuarios):
         return None
 
 
+def menu(usuario, usuarios):
+
+    opcion = 0
+
+    while opcion != 5:
+
+        print("\n===== MENÚ PRINCIPAL =====")
+        print("Bienvenido,", usuario)
+        print("1. Consultar saldo")
+        print("2. Depositar dinero")
+        print("3. Extraer dinero")
+        print("4. Transferir dinero")
+        print("5. Salir")
+
+        opcion = int(input("Seleccione una opción: "))
+
+        if opcion == 1:
+            print("Consultar saldo")
+
+        elif opcion == 2:
+            print("Depositar dinero")
+
+        elif opcion == 3:
+            print("Extraer dinero")
+
+        elif opcion == 4:
+            print("Transferir dinero")
+
+        elif opcion == 5:
+            print("Gracias por utilizar el cajero.")
+
+        else:
+            print("Opción inválida.")
+
+
 def main():
 
     usuarios = cargar_usuarios()
@@ -57,9 +92,7 @@ def main():
     usuario_actual = login(usuarios)
 
     if usuario_actual != None:
-        print("Login exitoso.")
-    else:
-        print("No se pudo iniciar sesión.")
+        menu(usuario_actual, usuarios)
 
 
 main()
