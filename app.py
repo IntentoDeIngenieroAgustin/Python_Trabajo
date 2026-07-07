@@ -50,6 +50,14 @@ def login(usuarios):
         return None
 
 
+def consultar_saldo(usuario, usuarios):
+
+    saldo = usuarios[usuario]["saldo"]
+
+    print("\n===== CONSULTA DE SALDO =====")
+    print("Su saldo actual es: $", saldo)
+
+
 def menu(usuario, usuarios):
 
     opcion = 0
@@ -67,7 +75,7 @@ def menu(usuario, usuarios):
         opcion = int(input("Seleccione una opción: "))
 
         if opcion == 1:
-            print("Consultar saldo")
+            consultar_saldo(usuario, usuarios)
 
         elif opcion == 2:
             print("Depositar dinero")
