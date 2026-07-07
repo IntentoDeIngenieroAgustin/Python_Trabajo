@@ -50,12 +50,22 @@ def login(usuarios):
         return None
 
 
+def registrar_operacion(usuario, operacion):
+
+    archivo = open("historial.txt", "a")
+
+    archivo.write(usuario + " - " + operacion + "\n")
+
+    archivo.close()
+
+
 def consultar_saldo(usuario, usuarios):
 
     saldo = usuarios[usuario]["saldo"]
 
     print("\n===== CONSULTA DE SALDO =====")
     print("Su saldo actual es: $", saldo)
+    registrar_operacion(usuario, "Consultó su saldo. Saldo: $" + str(saldo))
 
 
 def menu(usuario, usuarios):
