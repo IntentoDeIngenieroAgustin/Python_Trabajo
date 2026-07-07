@@ -68,6 +68,42 @@ def consultar_saldo(usuario, usuarios):
     registrar_operacion(usuario, "Consultó su saldo. Saldo: $" + str(saldo))
 
 
+def guardar_usuarios(usuarios):
+
+    archivo = open("usuarios.txt", "w")
+
+    for usuario in usuarios:
+
+        contraseña = usuarios[usuario]["contraseña"]
+        saldo = usuarios[usuario]["saldo"]
+
+        archivo.write(usuario + "," + contraseña + "," + str(saldo) + "\n")
+
+    archivo.close()
+
+
+def depositar(usuario, usuarios):
+
+    print("\n===== DEPÓSITO =====")
+
+    monto = float(input("Ingrese el monto a depositar: $"))
+
+    if monto > 0:
+
+        usuarios[usuario]["saldo"] += monto
+
+        guardar_usuarios(usuarios)
+
+        registrar_operacion(usuario, "Depositó $" + str(monto))
+
+        print("Depósito realizado con éxito.")
+        print("Nuevo saldo: $", usuarios[usuario]["saldo"])
+
+    else:
+
+        print("El monto debe ser mayor que cero.")
+
+
 def menu(usuario, usuarios):
 
     opcion = 0
@@ -88,7 +124,7 @@ def menu(usuario, usuarios):
             consultar_saldo(usuario, usuarios)
 
         elif opcion == 2:
-            print("Depositar dinero")
+            depositar(usuario, usuarios)
 
         elif opcion == 3:
             print("Extraer dinero")
