@@ -1,3 +1,6 @@
+LIMITE_EXTRACCION = 20000
+
+
 def cargar_usuarios():
 
     usuarios = {}
@@ -104,6 +107,40 @@ def depositar(usuario, usuarios):
         print("El monto debe ser mayor que cero.")
 
 
+def extraer(usuario, usuarios):
+
+    print("\n===== EXTRACCIÓN =====")
+
+    monto = float(input("Ingrese el monto a extraer: $"))
+
+    if monto <= 0:
+
+        print("El monto debe ser mayor que cero.")
+
+    elif monto > LIMITE_EXTRACCION:
+
+        print("No puede extraer más de $", LIMITE_EXTRACCION)
+
+    elif monto > usuarios[usuario]["saldo"]:
+
+        print("Saldo insuficiente.")
+
+    else:
+
+        usuarios[usuario]["saldo"] -= monto
+
+        guardar_usuarios(usuarios)
+
+        registrar_operacion(
+            usuario,
+            "Extrajo $" + str(monto) +
+            ". Saldo actual: $" + str(usuarios[usuario]["saldo"])
+        )
+
+        print("Extracción realizada con éxito.")
+        print("Saldo restante: $", usuarios[usuario]["saldo"])
+
+
 def menu(usuario, usuarios):
 
     opcion = 0
@@ -127,7 +164,7 @@ def menu(usuario, usuarios):
             depositar(usuario, usuarios)
 
         elif opcion == 3:
-            print("Extraer dinero")
+            extraer(usuario, usuarios)
 
         elif opcion == 4:
             print("Transferir dinero")
