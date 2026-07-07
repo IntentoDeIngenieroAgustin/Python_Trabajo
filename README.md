@@ -1,7 +1,7 @@
 # Python_Trabajo
 Ayala Agustin
 De domingo Costanza
-
+Luciano Garcia
 
 Comision:1.1
 
@@ -13,4 +13,4 @@ usuario:juan contraseña:1234
 usuario:maria contraseña:abcd
 usuario:pedro contraseña:4321
 2. interactue con el sistema a traves de los numeros del 1-5 para operaciones y el numero 6 para salir.
-3. en algunos casos se le pedira el numero 0 para salir de operaciones.
+3. en algunos casos se le pedira el numero 0 para salir de operaciones
