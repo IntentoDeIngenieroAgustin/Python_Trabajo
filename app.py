@@ -111,34 +111,39 @@ def extraer(usuario, usuarios):
 
     print("\n===== EXTRACCIÓN =====")
 
-    monto = float(input("Ingrese el monto a extraer: $"))
+    while True:
 
-    if monto <= 0:
+        monto = float(input("Ingrese el monto a extraer ($0 para cancelar): "))
 
-        print("El monto debe ser mayor que cero.")
+        if monto == 0:
+            print("Operación cancelada.")
+            break
 
-    elif monto > LIMITE_EXTRACCION:
+        elif monto < 0:
+            print("El monto debe ser mayor que cero.")
 
-        print("No puede extraer más de $", LIMITE_EXTRACCION)
+        elif monto > LIMITE_EXTRACCION:
+            print("No puede extraer más de $", LIMITE_EXTRACCION)
 
-    elif monto > usuarios[usuario]["saldo"]:
+        elif monto > usuarios[usuario]["saldo"]:
+            print("Saldo insuficiente.")
 
-        print("Saldo insuficiente.")
+        else:
 
-    else:
+            usuarios[usuario]["saldo"] -= monto
 
-        usuarios[usuario]["saldo"] -= monto
+            guardar_usuarios(usuarios)
 
-        guardar_usuarios(usuarios)
+            registrar_operacion(
+                usuario,
+                "Extrajo $" + str(monto) +
+                ". Saldo actual: $" + str(usuarios[usuario]["saldo"])
+            )
 
-        registrar_operacion(
-            usuario,
-            "Extrajo $" + str(monto) +
-            ". Saldo actual: $" + str(usuarios[usuario]["saldo"])
-        )
+            print("\nExtracción realizada con éxito.")
+            print("Saldo restante: $", usuarios[usuario]["saldo"])
 
-        print("Extracción realizada con éxito.")
-        print("Saldo restante: $", usuarios[usuario]["saldo"])
+            break
 
 
 def menu(usuario, usuarios):
