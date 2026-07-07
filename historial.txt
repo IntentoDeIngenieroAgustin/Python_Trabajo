@@ -1,3 +1,7 @@
 maria - Consultó su saldo. Saldo: $80000
 maria - Depositó $100.0
 maria - Consultó su saldo. Saldo: $80100.0
+maria - Consultó su saldo. Saldo: $80100.0
+maria - Extrajo $1000. Saldo actual: $79100.0
+maria - Consultó su saldo. Saldo: $79100.0
+maria - Depositó $1000

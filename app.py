@@ -13,7 +13,7 @@ def cargar_usuarios():
 
         usuario = datos[0]
         contraseña = datos[1]
-        saldo = int(datos[2])
+        saldo = float(datos[2])
 
         usuarios[usuario] = {
             "contraseña": contraseña,
@@ -89,7 +89,7 @@ def depositar(usuario, usuarios):
 
     print("\n===== DEPÓSITO =====")
 
-    monto = float(input("Ingrese el monto a depositar: $"))
+    monto = int(input("Ingrese el monto a depositar: $"))
 
     if monto > 0:
 
@@ -113,7 +113,12 @@ def extraer(usuario, usuarios):
 
     while True:
 
-        monto = float(input("Ingrese el monto a extraer ($0 para cancelar): "))
+        try:
+            monto = int(
+                input("Ingrese el monto a extraer ($0 para cancelar): "))
+        except ValueError:
+            print("Debe ingresar un número.")
+            continue
 
         if monto == 0:
             print("Operación cancelada.")
