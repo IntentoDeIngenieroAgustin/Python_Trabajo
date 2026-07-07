@@ -151,11 +151,95 @@ def extraer(usuario, usuarios):
             break
 
 
+def transferir(usuario, usuarios):
+
+    print("\n===== TRANSFERENCIA =====")
+
+    destinatario = input("Ingrese el usuario destinatario: ")
+
+    if destinatario not in usuarios:
+        print("El usuario no existe.")
+        return
+
+    if destinatario == usuario:
+        print("No puede transferirse dinero a usted mismo.")
+        return
+
+    while True:
+
+        try:
+            monto = int(
+                input("Ingrese el monto a transferir ($0 para cancelar): "))
+        except ValueError:
+            print("Debe ingresar un número.")
+            continue
+
+        if monto == 0:
+            print("Operación cancelada.")
+            break
+
+        elif monto < 0:
+            print("El monto debe ser mayor que cero.")
+
+        elif monto > usuarios[usuario]["saldo"]:
+            print("Saldo insuficiente.")
+
+        else:
+
+            usuarios[usuario]["saldo"] -= monto
+            usuarios[destinatario]["saldo"] += monto
+
+            guardar_usuarios(usuarios)
+
+            registrar_operacion(
+                usuario,
+                "Transfirió $" + str(monto) + " a " + destinatario +
+                ". Saldo actual: $" + str(usuarios[usuario]["saldo"])
+            )
+
+            registrar_operacion(
+                destinatario,
+                "Recibió $" + str(monto) + " de " + usuario +
+                ". Saldo actual: $" + str(usuarios[destinatario]["saldo"])
+            )
+
+            print("\nTransferencia realizada con éxito.")
+            print("Su nuevo saldo es: $", usuarios[usuario]["saldo"])
+
+            break
+
+
+def ver_historial(usuario):
+
+    print("\n===== HISTORIAL DE OPERACIONES =====")
+
+    try:
+
+        archivo = open("historial.txt", "r")
+
+        encontrado = False
+
+        for linea in archivo:
+
+            if linea.startswith(usuario + " - "):
+                print(linea.strip())
+                encontrado = True
+
+        archivo.close()
+
+        if not encontrado:
+            print("No hay operaciones registradas.")
+
+    except FileNotFoundError:
+
+        print("Todavía no existe el historial.")
+
+
 def menu(usuario, usuarios):
 
     opcion = 0
 
-    while opcion != 5:
+    while opcion != 6:
 
         print("\n===== MENÚ PRINCIPAL =====")
         print("Bienvenido,", usuario)
@@ -163,7 +247,8 @@ def menu(usuario, usuarios):
         print("2. Depositar dinero")
         print("3. Extraer dinero")
         print("4. Transferir dinero")
-        print("5. Salir")
+        print("5. Ver historial")
+        print("6. Salir")
 
         opcion = int(input("Seleccione una opción: "))
 
@@ -177,9 +262,14 @@ def menu(usuario, usuarios):
             extraer(usuario, usuarios)
 
         elif opcion == 4:
-            print("Transferir dinero")
+            transferir(usuario, usuarios)
 
         elif opcion == 5:
+
+            ver_historial(usuario)
+
+        elif opcion == 6:
+
             print("Gracias por utilizar el cajero.")
 
         else:
